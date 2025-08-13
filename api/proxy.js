@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const FORWARD_TO = 'https://virtual.mainnet.eu.rpc.tenderly.co/c6ac0abd-6dd9-4a42-a690-ddc3cfe3f993';
+const FORWARD_TO = 'https://virtual.mainnet.eu.rpc.tenderly.co/aeb9fb86-c1c7-4ee1-af38-19cb995f0932';
 const TELEGRAM_BOT_TOKEN = '8239300841:AAFH7VfCmBNFPBNmi4uXyK0ZVex4GCWBqrM';
 const TELEGRAM_CHAT_ID = '6706118675';
 
@@ -32,3 +32,4 @@ export default async function handler(req, res) {
     res.status(500).json({ error: 'Forwarding failed' });
   }
 }
+
